@@ -1,8 +1,8 @@
 import OpenAI from "openai";
-import ORG, { AgentType } from "../agents/org";
+import ORG, { AgentType } from "../agents/org.js";
 import { ChatCompletionMessageParam } from "openai/resources";
 import fs from "fs";
-import debugLog from "./debug-log";
+import debugLog from "./debug-log.js";
 
 interface LlmResponse {
   status: "useTool" | "provideFinalReport" | "employeeRequest";
@@ -17,10 +17,13 @@ const getLlmRequest = async (
   requests: string[],
   agent: AgentType
 ): Promise<LlmResponse> => {
-  const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-  if (!OPENAI_API_KEY) {
-    throw new Error("OPENAI_API_KEY is not set");
+  // Use GitHub Models GPT-4.1 Mini
+  const GITHUB_MODELS_TOKEN = process.env["GITHUB_MODELS_TOKEN"];
+  if (!GITHUB_MODELS_TOKEN) {
+    throw new Error("GITHUB_MODELS_TOKEN is not set");
   }
+  const endpoint = "https://models.github.ai/inference";
+  const model = "openai/gpt-4.1-mini";
   const message = `You are an employee in a hedge fund. Your name is: ${
     agent.name
   }. Your job description is: ${
@@ -36,7 +39,7 @@ const getLlmRequest = async (
       ? `You have ${
           agent.employees.length
         } employees which you can request as many things as you like from at any time.${agent.employees.map(
-          (employee, index) =>
+          (employee: any, index: number) =>
             ` ${index === 0 ? "An" : "Another"} employee of yours is: ${
               employee.name
             }, their id is: ${employee.id}, their job description is: '${
@@ -51,7 +54,7 @@ const getLlmRequest = async (
   }${
     agent.employees.length > 0 ? ` | "employeeRequest"` : ""
   } ], "internalMonologueShort": [your internal monologue about what you are thinking during this. Short version, one small sentense], "internalMonologueLong": [your internal monologue about what you are thinking during this. Long version, several paragraphs], "toolData": [a list of JSON data for each use of your tool. can be left blank if you are not using your tool], "report": [your final report to pass on to your manager, can be left blank if you are using your tool or contacting an employee], "employeeRequest": [list of JSON data for requests to your employees. can be left blank if not requesting anything from your employee] }. You can take as many actions as you like, but only one at a time. After each action you will be fed the response, and then can choose another action. You may ask the same employee multiple requests, or multiple employees different requests, or use your tool as many times as you like in any order.`;
-  const openai = new OpenAI({ apiKey: OPENAI_API_KEY });
+  const openai = new OpenAI({ baseURL: endpoint, apiKey: GITHUB_MODELS_TOKEN });
   debugLog("🚀", `${agent.name} is making a request to the LLM`);
   debugLog("Message", message);
   debugLog("Request", requests[requests.length - 1]);
@@ -61,7 +64,7 @@ const getLlmRequest = async (
         role: "system",
         content: message,
       },
-      ...requests.map((text, index) => {
+      ...requests.map((text, index: number) => {
         const item: ChatCompletionMessageParam = {
           role: index % 2 === 0 ? "user" : "assistant",
           content: text,
@@ -69,7 +72,7 @@ const getLlmRequest = async (
         return item;
       }),
     ],
-    model: "gpt-4-turbo",
+    model,
     response_format: { type: "json_object" },
   });
 

@@ -1,5 +1,5 @@
-import { FIN_DATA_API } from "../app/constants";
-import getFinDataOptions from "./options";
+import { FIN_DATA_API } from "../app/constants.js";
+import getFinDataOptions from "./options.js";
 
 const getPrices = async (
   ticker: string,

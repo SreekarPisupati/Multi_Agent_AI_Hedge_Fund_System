@@ -1,4 +1,4 @@
-import ORG, { AgentType } from "../agents/org";
+import ORG, { AgentType } from "../agents/org.js";
 
 const findEmployee = (agent: AgentType, id: string): AgentType | null => {
   if (agent.employees.length === 0) {

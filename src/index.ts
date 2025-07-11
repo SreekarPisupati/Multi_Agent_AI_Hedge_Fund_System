@@ -1,11 +1,11 @@
-import dotenv from "dotenv";
-import ORG, { AgentType } from "./agents/org";
-import getLlmRequest from "./utils/llm-request";
-import APPROVED_COMPANIES from "./app/approved-companies";
+import ORG, { AgentType } from "./agents/org.js";
+import getLlmRequest from "./utils/llm-request.js";
+import APPROVED_COMPANIES from "./app/approved-companies.js";
 import fs from "fs";
-import findEmployee from "./utils/find-employee";
-import debugLog from "./utils/debug-log";
-import getToolData from "./utils/get-tool-data";
+import findEmployee from "./utils/find-employee.js";
+import debugLog from "./utils/debug-log.js";
+import getToolData from "./utils/get-tool-data.js";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -18,7 +18,10 @@ const employeeRequest = async (request: string[], employee: AgentType) => {
 
   // Make the request to the LLM
   const response = await getLlmRequest(request, employee);
-  const status = response.status;
+  let status = response.status;
+  if (Array.isArray(status)) {
+    status = status[0];
+  }
   if (!status) throw new Error("No status in response");
 
   // Handling employee requests

@@ -1,13 +1,13 @@
-import { AgentType } from "../agents/org";
-import getBalanceSheets from "../financials/get-balance-sheets";
-import getCashFlowStatements from "../financials/get-cash-flow-statements";
-import getCompanyFacts from "../financials/get-company-facts";
-import getIncomeStatements from "../financials/get-income-statements";
-import getInsiderTrades from "../financials/get-insider-trades";
-import getMetrics from "../financials/get-metrics";
-import getNews from "../financials/get-news";
-import getPrices from "../financials/get-prices";
-import getSegmentedRevenues from "../financials/get-segmented-revenues";
+import { AgentType } from "../agents/org.js";
+import getBalanceSheets from "../financials/get-balance-sheets.js";
+import getCashFlowStatements from "../financials/get-cash-flow-statements.js";
+import getCompanyFacts from "../financials/get-company-facts.js";
+import getIncomeStatements from "../financials/get-income-statements.js";
+import getInsiderTrades from "../financials/get-insider-trades.js";
+import getMetrics from "../financials/get-metrics.js";
+import getNews from "../financials/get-news.js";
+import getPrices from "../financials/get-prices.js";
+import getSegmentedRevenues from "../financials/get-segmented-revenues.js";
 
 const getToolData = async (response: any, employee: AgentType) => {
   let toolDataList = response.toolData;
