@@ -1,15 +1,22 @@
-# Multi_Agent_AI_Hedge_Fund_System
+# Multi-Agent AI Hedge Fund System
 
+This project simulates a hedge fund powered entirely by AI agents organized in a hierarchical structure, closely resembling a real-world financial organization.
 
+At the core is a **CEO Agent**, responsible for making high-level buy/sell decisions. A network of **analyst agents ("employees")** operate under the CEO and independently investigate market data using tools connected to [Financial Datasets](https://www.financialdatasets.ai/). Each agent can explore real-world stock data, analyze trends, and summarize insights.
 
-The agents are structured in a similar way to a traditional organisation, with many employees reporting to the CEO. Each of the employees/agents have access to a tool which they can use to query real word stock data via [Financial Datasets](https://www.financialdatasets.ai/). The agents then summarise the data and report it back to the CEO. The agents can investigate whatever data they like though their tool, the CEO can talk with any employee at any time and request anything from them. After consideration and investigation the CEO will make a decision on what stocks to buy or sell.
+The CEO dynamically interacts with agents, requests deeper investigations, and gathers their reports before making final trading decisions.
 
+---
 
-# Running the Agents
+## 🔧 Running the Agents
 
-- Clone the repo and jump into the directory.
-- Create a `.env` file in root and set `OPENAI_API_KEY` and `FINANCIAL_DATASETS_API_KEY` (from [here](https://platform.openai.com/chat-completions) and [here](https://www.financialdatasets.ai/))
-- Run `yarn` to install the dependencies, and then `yarn start` to run the agents.
-
-You can adjust your request in `src/index.ts` at the bottom to align with what request you would like to ask the AI Hedge Fund.  
+1. **Clone this repository** and navigate into the project folder.
+2. Create a `.env` file in the root directory and add your keys:
+   - `OPENAI_API_KEY` → [Get it here](https://platform.openai.com/chat-completions)
+   - `FINANCIAL_DATASETS_API_KEY` → [Get it here](https://www.financialdatasets.ai/)
+3. Install dependencies:
+   ```bash
+   yarn
+4. Start the agent system:
+    yarn start
 
